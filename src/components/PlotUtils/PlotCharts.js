@@ -136,7 +136,7 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
     });
 }
 
-export function createChart(divName, dataArr) {
+export function createChart(divName, dataArr1, dataArr2) {
     var Chart = echarts.init(document.getElementById(divName))
     var option = {
 
@@ -152,9 +152,9 @@ export function createChart(divName, dataArr) {
             }
         },
         legend: {
-            orient: 'vertical',
-            data: ["Output's Amounts"],
-            right: '37%',
+            orient: 'horizontal',
+            data: ["Output's Amounts","Change's Amount"],
+            right: '20%',
             bottom: 10,
             textStyle: {
                 fontSize: 14,
@@ -178,11 +178,11 @@ export function createChart(divName, dataArr) {
             // text: 'Amounts'
         },
         yAxis:
-        {
+        [{
             // name: '#Outputs',
-            name: "Amounts",
+            name: "Amount For Output",
 
-            data: dataArr.map(item => item.OutputAmount),
+            data: dataArr1.map(item => item.OutputAmount),
             axisLabel: {
                 textStyle: {
                     fontSize: 14,//
@@ -195,12 +195,27 @@ export function createChart(divName, dataArr) {
                 fontWeight: 'bold'
             }
 
-        }
+        },{
+            name: "Amount For Change",
+            data: dataArr2.map(item => item.ChangeAmount),
+            axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000',
+                    fontWeight: 'bold'
+                },
+            }, nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
+            }
+            
+        }]
         ,
         series: [{
             name: "Output's Amounts",
             type: 'bar',
-            data: dataArr.map(item => item.Stats),
+            data: dataArr1.map(item => item.Stats),
             itemStyle: {
                 borderRadius: 5,
                 borderWidth: 1,
@@ -212,7 +227,22 @@ export function createChart(divName, dataArr) {
                 // barWidth: '2%'
                 // barMaxWidth:2
             }
-        }]
+        },{
+            name: "Change's Amount",
+            type: 'bar',
+            data: dataArr2.map(item => item.Stats),
+            itemStyle: {
+                color: '#ff7f50',
+                borderRadius: 5,
+                borderWidth: 1,
+                borderType: 'solid',
+                borderColor: '#ff7f50',
+                shadowColor: '#73c0de',
+                shadowBlur: 3,
+
+            }
+        }
+    ]
     }
     Chart.setOption(option)
     window.addEventListener('resize', function () {

@@ -38,7 +38,7 @@
                 <!-- output -->
                 <el-card>
                     <el-row><span>Output</span></el-row>
-                    <el-row v-for=" output in OutputList" :gutter="20" :key="output.id">
+                    <el-row v-if="output.type == 'output'" v-for=" output in OutputList" :gutter="20" :key="output.id">
                         <el-col :span="20">
                             <el-popover placement="top-start" trigger="hover" :content="output.hash">
                                 <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
@@ -111,7 +111,8 @@
                         <span>Output</span>
                         <span><el-select v-model="OutputCurrentPick" style="width: 100%;"
                                 placeholder="select an output">
-                                <el-option v-for=" item  in  OutputList " :key="item.id" :value="item.hash">
+                                <el-option v-if="item.type == 'output'" v-for=" item  in  OutputList " :key="item.id"
+                                    :value="item.hash">
                                 </el-option>
 
                             </el-select></span>
@@ -142,7 +143,7 @@
 import * as echarts from 'echarts'
 import { createChart } from '../PlotUtils/PlotCharts.js'
 import { timestampToDate } from '../PlotUtils/Date.js'
-import {BASE_URL} from '../config/index.js'
+import { BASE_URL } from '../config/index.js'
 
 import axios from 'axios'
 // import eventBus from '../event-bus.js'
@@ -151,7 +152,7 @@ export default {
     data() {
         return {
             // Prob: '',
-            base_url:BASE_URL,
+            base_url: BASE_URL,
             username: this.$store.state.username,
             showProb: false,
             BlockList: [],
@@ -206,7 +207,7 @@ export default {
         },
         OutputStats: {
             handler(newVal, oldVal) {
-                this.createChart('chart1', newVal)
+                this.createChart('chart1', newVal, this.changeStats)
             }
         },
         // InputCurrentPick: {
@@ -328,22 +329,38 @@ export default {
                 for (let hash in output) {
                     let info = output[hash]
                     let amount = info.value
-                    let role = info.flag
-                    this.OutputList.push({ hash, amount, role, id: this.OutputList.length })
+                    // let role = info.flag
+                    let type = info.type
+                    this.OutputList.push({
+                        hash, amount, 'type': type,
+                        id: this.OutputList.length
+                    })
                 }
+                console.log(this.OutputList)
 
                 //统计outputlist
                 let outputStats = {}
+                let changeStats = {}
                 for (const element of this.OutputList) {
                     let amount = element.amount
-                    if (outputStats[amount]) {
-                        outputStats[amount]++
+                    if (element.type === 'change') {
+                        if (changeStats[amount]) {
+                            changeStats[amount]++
+                        } else {
+                            changeStats[amount] = 1
+                        }
                     } else {
-                        outputStats[amount] = 1
+                        if (outputStats[amount]) {
+                            outputStats[amount]++
+                        } else {
+                            outputStats[amount] = 1
+                        }
                     }
                 }
                 this.OutputStats = Object.entries(outputStats).map(([key, value]) =>
                     ({ 'OutputAmount': key, 'Stats': value }))
+                this.changeStats = Object.entries(changeStats).map(([key, value]) =>
+                    ({ 'ChangeAmount': key, 'Stats': value }))
                 // console.log(this.OutputStats)
             })
         }
