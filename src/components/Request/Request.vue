@@ -288,9 +288,9 @@ export default {
 
 }
 
-.el-input {
-    // width: 50%;
-}
+// .el-input {
+//     // width: 50%;
+// }
 
 .number-display {
     display: flex;

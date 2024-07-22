@@ -38,7 +38,7 @@
             </el-col>
 
             <el-col :span="8">
-                <el-card class="box-card" style="height:42vh;">
+                <el-card class="box-card" style="height:42vh">
                     <div style="text-align: center;">Privacy Using Percentage</div>
                     <div style="width:100%; height:38vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
@@ -354,9 +354,9 @@ export default {
 
 //
 
-.el-button {
-    // width: 100px;
-}
+// .el-button {
+//     // width: 100px;
+// }
 
 .el-select {
     width: 50%;
