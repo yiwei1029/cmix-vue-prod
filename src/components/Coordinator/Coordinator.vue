@@ -9,7 +9,7 @@
 
             </el-col> -->
 
-            <el-col :span="8"><el-card class="box-card" style="height:33vh">
+            <el-col :span="8"><el-card class="box-card" style="height:42vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
                     </div>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
@@ -24,23 +24,31 @@
                         <el-button @click="ClickReduceBudget" type="danger" style="width: 100%;">Remove</el-button>
                     </div>
                     <div class="right-left"><span id="commissionRate">Commission Rate:</span>
-                        <el-input style="width: 100%;" v-model="commissionRate"></el-input>
+                        <span>{{ commissionRate.toFixed(2) }}</span>
+                    </div>
+                    <div class="left-right" style="margin-right">
+                        <el-input style="" v-model="rateAdd"></el-input>
+                        <el-button @click="commissionRate += rateAdd" type="primary">Add</el-button>
+                    </div>
+                    <div class="left-right" style="margin-right">
+                        <el-input style="" v-model="rateReduce"></el-input>
+                        <el-button @click="commissionRate -= rateReduce" type="danger">Remove</el-button>
                     </div>
                 </el-card>
             </el-col>
 
             <el-col :span="8">
-                <el-card class="box-card" style="height:33vh">
+                <el-card class="box-card" style="height:42vh;">
                     <div style="text-align: center;">Privacy Using Percentage</div>
-                    <div style="width:100%; height:30vh;object-fit: cover;" id="chart2"></div>
+                    <div style="width:100%; height:38vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
             </el-col>
             <el-col :span="8">
-                <el-card style="height:33vh">
+                <el-card style="height:42vh">
                     <el-row>
                         <el-col :span="12" v-for="item in Stats.slice(0, 2)" :key="item.title">
                             <div>
-                                <el-statistic :title="item.title" group-separator="," :style="randomRgb()">
+                                <el-statistic :title="item.title" group-separator="," :style="randomRgb(item.color)">
                                     <template slot="formatter">
                                         {{ item.value }}
                                     </template>
@@ -51,7 +59,7 @@
                     <el-row>
                         <el-col :span="12" v-for="item in Stats.slice(2, 4)" :key="item.title">
                             <div>
-                                <el-statistic :title="item.title" group-separator="," :style="randomRgb()">
+                                <el-statistic :title="item.title" group-separator="," :style="randomRgb(item.color)">
                                     <template slot="formatter">
                                         {{ item.value }}
                                     </template>
@@ -91,7 +99,7 @@
         <!-- chart -->
         <el-row :gutter="10">
             <el-col :span="24"><el-card class="box-card">
-                    <div>Requests, Transactions and Revenue</div>
+                    <div style="text-align: center">Requests, Transactions and Revenue</div>
                     <div style="width: 100%; height: 38vh;" id="chart3">
                     </div>
                 </el-card></el-col>
@@ -129,6 +137,9 @@ export default {
     name: 'Coordinator',
     data() {
         return {
+            randomRgbCount: 0,
+            rateAdd: 0.1,
+            rateReduce: 0.1,
             base_url: BASE_URL,
             Balance: 1000,
             Budget: this.$store.state.budget,
@@ -262,14 +273,16 @@ export default {
             // this.Budget = this.Budget < 0 ? 0 : this.Budget
 
         },
-        randomRgb(item) {
+        randomRgb(color) {
             let R = Math.floor(Math.random() * 255);
             let G = Math.floor(Math.random() * 255);
             let B = Math.floor(Math.random() * 255);
             // console.log(R, G, B)
             return {
-                background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px',
-                height: '14vh', 'lineHeight': '7vh'
+                // background: 'rgb(' + R + ',' + G + ',' + B + ', .2)', 
+                background: color,
+                borderRadius: '5px',
+                height: '18vh', 'lineHeight': '10vh'
             }
         },
         createPieChart,
@@ -349,9 +362,9 @@ export default {
     width: 50%;
 }
 
-.el-statistic .head span.title {
-    font-size: 14px;
-    font-weight: bold;
-    color: black;
+/deep/ .title {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: black !important;
 }
 </style>

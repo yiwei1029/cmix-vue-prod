@@ -21,7 +21,7 @@ export function createPieChart(divName, dataArray) {
             orient: 'vertical',
             x: 'left',
             left: 25,
-            top:40,
+            top:70,
             data: dataArray.map(item => item.name)
         },
         series: [
@@ -63,7 +63,12 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
                 textStyle: {
                     fontSize: 14,//
                     color: '#000000', fontWeight: 'bold'
-                }
+                },
+                
+            },nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
             }
         },
         legend: {
