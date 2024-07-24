@@ -35,10 +35,10 @@
                         </el-col>
                     </el-row>
                 </el-card>
-                <!-- output -->
+                <!-- output  v-if="output.type == 'output'" -->
                 <el-card>
                     <el-row><span>Output</span></el-row>
-                    <el-row v-if="output.type == 'output'" v-for=" output in OutputList" :gutter="20" :key="output.id">
+                    <el-row v-for=" output in OutputList" :gutter="20" :key="output.id">
                         <el-col :span="20">
                             <el-popover placement="top-start" trigger="hover" :content="output.hash">
                                 <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
