@@ -62,8 +62,7 @@
                             <div style="font-family: Georgia">FYI: <i>f</i> is sender and <i>c</i> is coordinator</div>
                         </el-dialog>
                         <el-button type="primary" :disabled="sendTransactionDisable" style="flex:1; "
-                            @click="sendTransaction">Send
-                            Transaction</el-button>
+                            @click="sendTransaction">Send Transaction</el-button>
                     </div>
 
 
@@ -236,7 +235,9 @@ export default {
             }).catch(() => {
                 this.$message({
                     type: 'info',
-                    message: 'Cancel'
+                    message: 'Cancel',
+                    offset: 100,
+                    duration: 1000
                 });
             });
         },

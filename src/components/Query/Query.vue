@@ -319,13 +319,19 @@ export default {
                 console.log(dataTemp.data.block.tx[1].vin[0].prevout.value)
                 this.InputList = []
                 this.OutputList = []
-                let input = dataTemp.data['format_data']['input']
+                // let input = dataTemp.data['format_data']['input']
                 let output = dataTemp.data['format_data']['output']
-                for (let hash in input) {
-                    let info = input[hash]
-                    let amount = info.value
-                    let role = info.flag
-                    this.InputList.push({ hash, amount, role, id: this.InputList.length })
+                // for (let hash in input) {
+                //     let info = input[hash]
+                //     let amount = info.value
+                //     let role = info.flag
+                //     this.InputList.push({ hash, amount, role, id: this.InputList.length })
+                // }
+                for (let vin of dataTemp.data.block.tx[1].vin) {
+                    let hash = vin.prevout.scriptPubKey.address
+                    let amount = vin.prevout.value
+                    this.InputList.push({ hash, amount, id: this.OutputList.length })
+                    // console.log(vin)
                 }
                 for (let hash in output) {
                     let info = output[hash]

@@ -52,7 +52,10 @@ export default {
             if (wallets.includes(this.LoginForm.username)) {
                 this.$store.commit('updateUsername', this.LoginForm.username)
                 console.log(this.$store.state.username)
-                this.$message({ message: 'login success', type: 'success' })
+                this.$message({
+                    message: 'login success', type: 'success', duration: 1000,
+                    offset: 100
+                })
                 this.$router.push('/Coordinator')
             }
             // this.$router.push('/Coordinator')
