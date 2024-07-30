@@ -223,7 +223,7 @@ export default {
 
     },
     mounted() {
-        console.log(this.$store.state.username)
+        // console.log(this.$store.state.username)
         // let blockData = this.$store.state.blockData.data
         // 获取block txid列表最近三个
         axios.get(`${this.base_url}/${this.username}/transfer`).then(resp => {
@@ -308,14 +308,15 @@ export default {
         },
         queryBlockById(blockId) {
             axios.get(`${this.base_url}/${this.username}/transfer/${blockId}`).then(resp => {
-                console.log(resp.data)
+                // console.log(resp.data)
                 let dataTemp = resp.data
                 this.BlockBasicInfo = {
                     height: dataTemp.data.block.height,
                     hash: dataTemp.data.block.hash,
                     time: timestampToDate(dataTemp.data.block.time)
                 }
-
+                // console.log(dataTemp.data.block.tx[1].vin[0].prevout.value) 遍历vin得到input
+                console.log(dataTemp.data.block.tx[1].vin[0].prevout.value)
                 this.InputList = []
                 this.OutputList = []
                 let input = dataTemp.data['format_data']['input']
@@ -336,7 +337,7 @@ export default {
                         id: this.OutputList.length
                     })
                 }
-                console.log(this.OutputList)
+                // console.log(this.OutputList)
 
                 //统计outputlist
                 let outputStats = {}

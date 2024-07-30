@@ -12,7 +12,7 @@
                     <el-input v-model="LoginForm.password" prefix-icon="el-icon-lock"></el-input>
                 </el-form-item>
                 <el-form-item class="btns">
-                    <el-button type="info" @click="resetLoginForm">reset</el-button>
+                    <el-button type="info" @click="">reset</el-button>
                     <el-button type="primary" @click="login">submit</el-button>
                 </el-form-item>
             </el-form>
