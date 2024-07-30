@@ -132,7 +132,9 @@ import { createPieChart, createMultiChart } from '../PlotUtils/PlotCharts.js'
 import Chart from '../PlotUtils/Chart.vue'
 import { getDate } from '../PlotUtils/Date.js'
 import axios from 'axios'
-import { BASE_URL } from '../config/index.js'
+// import { BASE_URL } from '../config/index.js'
+import BASE_URL from '../config'
+
 export default {
     name: 'Coordinator',
     data() {

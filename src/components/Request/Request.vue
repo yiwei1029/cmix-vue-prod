@@ -80,7 +80,8 @@
 <script>
 import axios from 'axios';
 // import eventBus from '../event-bus.js'
-import { BASE_URL } from '../config/index.js'
+// import { BASE_URL } from '../config/index.js'
+import BASE_URL from '../config'
 export default {
     name: 'Request',
     data() {

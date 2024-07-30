@@ -161,7 +161,9 @@
 import * as echarts from 'echarts'
 import { createChart } from '../PlotUtils/PlotCharts.js'
 import { timestampToDate } from '../PlotUtils/Date.js'
-import { BASE_URL } from '../config/index.js'
+// import { BASE_URL } from '../config/index.js'
+import BASE_URL from '../config'
+
 
 import axios from 'axios'
 // import eventBus from '../event-bus.js'
