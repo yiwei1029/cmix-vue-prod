@@ -58,7 +58,7 @@
 
                 <el-card>
                     <div>Latest transactions</div><br>
-                    <div v-for="([t, b]) in BlockTimeList" class="left-right">
+                    <div v-for="([t, b]) in BlockTimeList" class="left-right" :key="t">
                         <span style="font-size: 14px;">
                             {{ t }}
                         </span>
@@ -125,8 +125,26 @@
                                 Probability</el-button></span>
                     </div>
 
-                    <el-button style="width: 100%; background-color: #91cc75; color: black;">Probability: {{
-            prob }}</el-button>
+                    <el-button style="width: 100%; background-color: #91cc75; color: black;"
+                        @click="showDecompose(BlockCurrentPick)">Probability: {{ prob }}</el-button>
+                    <el-dialog title="Details" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+                        <div style="font-size: large; color: skyblue;">Input</div>
+                        <div class="left-right" v-for="(value, key, index) in mixedInput" :key="index">
+                            <span>{{ key }}</span>
+                            <span>{{ value.value }}</span>
+                        </div>
+                        <br>
+                        <div style="font-size: large; color: skyblue">Output</div>
+                        <div class="left-right" v-if="value.type == 'output'"
+                            v-for="(value, key, index) in decomposeOutput" :key="index">
+                            <span>{{ key }}</span>
+                            <span>{{ value.value }}</span>
+                        </div>
+                        <span slot="footer" class="dialog-footer">
+                            <!-- <el-button @click="dialogVisible = false">c</el-button> -->
+                            <el-button type="primary" @click="dialogVisible = false">read</el-button>
+                        </span>
+                    </el-dialog>
                 </el-card>
             </el-col>
         </el-row>
@@ -185,7 +203,10 @@ export default {
                 hash: '',
                 time: ''
             },
-            prob: 0
+            prob: 0,
+            mixedInput: {},
+            decomposeOutput: {},
+            dialogVisible: false
         }
     },
     computed: {
@@ -306,6 +327,27 @@ export default {
                 }
             })
         },
+        showDecompose(blockId) {
+            if (this.BlockCurrentPick === '') {
+                this.$message({
+                    message: 'Please select a block first!',
+                    type: 'warning',
+                    offset: 100,
+                    duration: 1000
+                })
+                return
+            }
+            axios.get(`${this.base_url}/${this.username}/transfer/${blockId}`).then(
+                resp => {
+                    console.log(resp.data.data.format_data);
+                    let dataTemp = resp.data.data.format_data
+                    this.mixedInput = dataTemp.input
+                    this.decomposeOutput = dataTemp.output
+                    this.dialogVisible = true
+
+                }
+            )
+        },
         queryBlockById(blockId) {
             axios.get(`${this.base_url}/${this.username}/transfer/${blockId}`).then(resp => {
                 // console.log(resp.data)
@@ -392,7 +434,7 @@ export default {
     align-items: center;
 
     :first-child {
-        flex: 1;
+        flex: 3;
 
     }
 

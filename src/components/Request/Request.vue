@@ -204,7 +204,9 @@ export default {
                     this.$message
                         ({
                             message: 'transfer successfully',
-                            type: 'success'
+                            type: 'success',
+                            offset: 100,
+                            duration: 1000
                         })
                     loadingInstance.close()
                 })
@@ -230,7 +232,9 @@ export default {
                 })
                 this.$message({
                     type: 'success',
-                    message: 'your input: ' + value
+                    message: 'your input: ' + value,
+                    offset: 100,
+                    duration: 1000
                 });
             }).catch(() => {
                 this.$message({
