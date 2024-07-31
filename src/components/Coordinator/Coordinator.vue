@@ -243,9 +243,9 @@ export default {
             { title: 'Today Requests', value: statsData['request_num'], color: '#fac858' },
             { title: 'Today Transactions', value: statsData['transaction_num'], color: '#ee6666' }]
             this.PrivacyPct = [{ name: 'c<0.02', value: statsData['c_range1'] },
-            { name: 'c>0.3', value: statsData['c_range2'] },
-            { name: '0.02<c<0.1', value: statsData['c_range3'] },
-            { name: '0.1<c<0.3', value: statsData['c_range4'] }]
+            { name: 'c>0.3', value: statsData['c_range4'] },
+            { name: '0.02<c<0.1', value: statsData['c_range2'] },
+            { name: '0.1<c<=0.3', value: statsData['c_range3'] }]
             //获取request, transactions, revenue数据来制作图表
             let dataObject = resp.data['data']
             // console.log(dataObject)
