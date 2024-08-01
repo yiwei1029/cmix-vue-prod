@@ -173,7 +173,7 @@ export default {
         return {
             // Prob: '',
             base_url: BASE_URL,
-            username: this.$store.state.username,
+            // username: this.$store.state.username,
             showProb: false,
             BlockList: [],
             TimeList: [],
@@ -212,6 +212,9 @@ export default {
         }
     },
     computed: {
+        username() {
+            return this.$store.state.username
+        }
         // BlockTimeList: function () {
         //     this.TimeList.map((e, i) => [e, this.BlockList[i]])
         // }

@@ -87,7 +87,7 @@ export default {
     data() {
         return {
             base_url: BASE_URL,
-            username: this.$store.state.username,
+            // username: this.$store.state.username,
             // disableAdd: false,
             dialogVisible: false,
             sendTransactionDisable: true,
@@ -125,14 +125,23 @@ export default {
         //             disableAdd = true
         //         }
         //     }
+        username(oldVal) {
+            if (oldVal === '') {
+                this.$router.push('/login');
+            }
+        }
     },
     computed: {
         disableAdd() {
             // console.log(this.InputList.length)
             return this.InputList.length > 0
+        },
+        username() {
+            return this.$store.state.username
         }
     },
     mounted() {
+        // console.log(this.username)
     },
     methods: {
         sumArr(arr) {
