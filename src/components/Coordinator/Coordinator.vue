@@ -24,15 +24,15 @@
                         <el-button @click="ClickReduceBudget" type="danger" style="width: 100%;">Remove</el-button>
                     </div>
                     <div class="right-left"><span id="commissionRate">Commission Rate:</span>
-                        <span>{{ commissionRate.toFixed(2) }}</span>
+                        <span>{{ $store.state.commissionRate.toFixed(3) }}</span>
                     </div>
                     <div class="left-right" style="margin-right">
                         <el-input style="" v-model="rateAdd"></el-input>
-                        <el-button @click="commissionRate += rateAdd" type="primary">Add</el-button>
+                        <el-button @click="commissionRateAdd" type="primary">Add</el-button>
                     </div>
                     <div class="left-right" style="margin-right">
                         <el-input style="" v-model="rateReduce"></el-input>
-                        <el-button @click="commissionRate -= rateReduce" type="danger">Remove</el-button>
+                        <el-button @click="commissionRateReduce" type="danger">Remove</el-button>
                     </div>
                 </el-card>
             </el-col>
@@ -140,14 +140,14 @@ export default {
     data() {
         return {
             randomRgbCount: 0,
-            rateAdd: 0.1,
-            rateReduce: 0.1,
+            rateAdd: 0.02,
+            rateReduce: 0.02,
             base_url: BASE_URL,
             Balance: 1000,
-            Budget: this.$store.state.budget,
+            // Budget: this.$store.state.budget,
             BudgetAdd: 1,
             BudgetReduce: 1,
-            commissionRate: 0,
+            // commissionRate: $store.state.commissionRate,
             Stats: [
                 { title: 'Today Active User', value: null },
                 { title: 'Today Revenue', value: null },
@@ -274,6 +274,12 @@ export default {
             // this.Budget -= parseFloat(this.BudgetReduce)
             // this.Budget = this.Budget < 0 ? 0 : this.Budget
 
+        },
+        commissionRateAdd() {
+            this.$store.commit('addCommissionRate', this.rateAdd)
+        },
+        commissionRateReduce() {
+            this.$store.commit('reduceCommissionRate', this.rateReduce)
         },
         randomRgb(color) {
             let R = Math.floor(Math.random() * 255);
