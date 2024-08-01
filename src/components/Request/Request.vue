@@ -141,6 +141,9 @@ export default {
         }
     },
     mounted() {
+        if (this.username === '') {
+            this.$router.push('/login')
+        }
         // console.log(this.username)
     },
     methods: {

@@ -46,6 +46,7 @@ export default {
     methods: {
         backToLogin() {
             this.$router.push('/login');
+            this.$store.commit('updateUsername', '')
         },
         toggleCollapseClick() {
             this.toggleCollapse = !this.toggleCollapse;

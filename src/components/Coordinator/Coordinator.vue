@@ -205,6 +205,9 @@ export default {
     computed: {
         // stat1: () => this.Stats.splice(0, 2),
         // stat2: () => this.Stats.splice(2, 2)
+        username() {
+            return this.$store.state.username
+        }
     },
     components: { Chart },
     watch: {
@@ -217,12 +220,16 @@ export default {
             handler(newData) {
                 this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
             }
-        }
+        },
+
     },
     mounted() {
-
+        // console.log('username:', this.username)
         // console.log(this.base_url)
         // this.createPieChart('chart1', this.BudgetPct)
+        if (this.username === '') {
+            this.$router.push('/login')
+        }
         this.createPieChart('chart2', this.PrivacyPct)
         this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
         axios.request(this.config.stats).then(resp => {

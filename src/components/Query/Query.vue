@@ -249,22 +249,25 @@ export default {
 
     },
     mounted() {
-        // console.log(this.$store.state.username)
-        // let blockData = this.$store.state.blockData.data
-        // 获取block txid列表最近三个
-        axios.get(`${this.base_url}/${this.username}/transfer`).then(resp => {
-            for (const txid of resp.data.data.slice(-3)) {
-                this.BlockList.push(txid)
-                // console.log(txid)
+        if (this.username === '') {
+            this.$router.push('/login')
+        } else {
+            // console.log(this.$store.state.username)
+            // let blockData = this.$store.state.blockData.data
+            // 获取block txid列表最近三个
+            axios.get(`${this.base_url}/${this.username}/transfer`).then(resp => {
+                for (const txid of resp.data.data.slice(-3)) {
+                    this.BlockList.push(txid)
+                    // console.log(txid)
 
-            }
-            this.getBlockTime(this.BlockList)
-            // this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
-            // console.log(this.BlockTimeList)
+                }
+                this.getBlockTime(this.BlockList)
+                // this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
+                // console.log(this.BlockTimeList)
 
-            // console.log(this.TimeList)
-        }).catch(err => { console.error(err) })
-
+                // console.log(this.TimeList)
+            }).catch(err => { console.error(err) })
+        }
     },
     beforeDestroy() {
         // eventBus.$off('block_data')
@@ -295,13 +298,6 @@ export default {
             return null
         },
         getBlockTime(blockList) {
-            // const promises = []
-            // for (const blockId of blockList) {
-            //     const promise = axios.get("${this.base_url}/f1/transfer/" + blockId).then(resp => {
-            //         this.TimeList.push(timestampToDate(resp.data.data.block.time))
-            //     })
-            //     promises.push(promise)
-            // }
             const promises = this.BlockList.map(blockId => axios.get(`${this.base_url}/${this.username}/transfer/${blockId}`).then(
                 resp => {
                     return timestampToDate(resp.data.data.block.time)
