@@ -58,7 +58,7 @@
 
                 <el-card>
                     <div>Latest transactions</div><br>
-                    <div v-for="([t, b]) in BlockTimeList" class="left-right" :key="t">
+                    <div v-for="([t, b]) in BlockTimeList" class="left-right" :key="b">
                         <span style="font-size: 14px;">
                             {{ t }}
                         </span>
@@ -127,7 +127,7 @@
 
                     <el-button style="width: 100%; background-color: #91cc75; color: black;"
                         @click="showDecompose(BlockCurrentPick)">Probability: {{ prob }}</el-button>
-                    <el-dialog title="Details" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+                    <el-dialog title="Details" :visible.sync="dialogVisible" width="30%">
                         <div style="font-size: large; color: skyblue;">Input</div>
                         <div class="left-right" v-for="(value, key, index) in mixedInput" :key="index">
                             <span>{{ key }}</span>
@@ -320,12 +320,12 @@ export default {
                 for (let input in tempData) {
                     if (input == this.InputCurrentPick) {
                         let problist = tempData[input]
-                        console.log(problist)
+                        // console.log(problist)
                         for (let probres of problist) {
                             if (probres.address == this.OutputCurrentPick) {
                                 // console.log(probres.address)
                                 this.prob = probres.probability
-                                console.log(this.prob)
+                                // console.log(this.prob)
                             }
                         }
                     }
@@ -363,7 +363,7 @@ export default {
                     time: timestampToDate(dataTemp.data.block.time)
                 }
                 // console.log(dataTemp.data.block.tx[1].vin[0].prevout.value) 遍历vin得到input
-                console.log(dataTemp.data.block.tx[1].vin[0].prevout.value)
+                // console.log(dataTemp.data.block.tx[1].vin[0].prevout.value)
                 this.InputList = []
                 this.OutputList = []
                 // let input = dataTemp.data['format_data']['input']
@@ -377,7 +377,7 @@ export default {
                 for (let vin of dataTemp.data.block.tx[1].vin) {
                     let hash = vin.prevout.scriptPubKey.address
                     let amount = vin.prevout.value
-                    this.InputList.push({ hash, amount, id: this.OutputList.length })
+                    this.InputList.push({ hash, amount, id: this.InputList.length })
                     // console.log(vin)
                 }
                 for (let hash in output) {
