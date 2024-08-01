@@ -138,13 +138,16 @@ export default {
         },
         username() {
             return this.$store.state.username
+        },
+        commissionRate() {
+            return this.$store.state.commissionRate
         }
     },
     mounted() {
         if (this.username === '') {
             this.$router.push('/login')
         }
-        // console.log(this.username)
+        console.log(this.commissionRate)
     },
     methods: {
         sumArr(arr) {
@@ -208,7 +211,7 @@ export default {
             let formData = { ...this.decompose.decomposeData }
             // eventBus.$emit('block_data', 'hello')
             // console.log(formData)
-            axios.post(`${this.base_url}/${this.username}/transfer`, formData)
+            axios.post(`${this.base_url}/${this.username}/transfer?fee_rate=${this.commissionRate.toFixed(2)}`, formData)
                 .then(resp => {
                     // console.log(resp.data)
                     // eventBus.$emit('block_data', resp.data)
