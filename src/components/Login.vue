@@ -6,7 +6,8 @@
             </div>
             <el-form :rules="LoginRules" class="login-form" ref="form" :model="LoginForm" label-width="0px">
                 <el-form-item label="" prop="username">
-                    <el-input v-model="LoginForm.username" prefix-icon="el-icon-user"></el-input>
+                    <el-input v-model="LoginForm.username" @keyup.enter.native="login"
+                        prefix-icon="el-icon-user"></el-input>
                 </el-form-item>
                 <el-form-item label="" prop="password">
                     <el-input v-model="LoginForm.password" prefix-icon="el-icon-lock"></el-input>

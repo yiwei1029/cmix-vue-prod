@@ -147,7 +147,7 @@ export default {
         if (this.username === '') {
             this.$router.push('/login')
         }
-        console.log(this.commissionRate)
+        console.log(this.commissionRate.toFixed(2))
     },
     methods: {
         sumArr(arr) {
