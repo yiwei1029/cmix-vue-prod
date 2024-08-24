@@ -110,10 +110,13 @@
                     </div>
                     <div class="left-right">
                         <span>Output</span>
-                        <span><el-select v-model="OutputCurrentPick" style="width: 100%;"
+                        <span v-if="OpShow"><el-select v-model="OutputCurrentPick" style="width: 100%;"
                                 placeholder="select an output">
-                                <el-option v-if="item.type == 'output'" v-for=" item  in  OutputList " :key="item.id"
+                                <!-- <el-option v-if="item.type == 'output'" v-for=" item  in  OutputHasProb " :key="item.id"
                                     :value="item.hash" :label="item.hash + ': ' + item.amount">
+                                </el-option> -->
+                                <el-option v-for=" item in OutputHasProb" :key="item.hash" :value="item"
+                                    :label="item.hash">
                                 </el-option>
 
                             </el-select></span>
@@ -122,7 +125,8 @@
                     <!-- <div>{{ findOutputByHash(OutputCurrentPick) }}</div> -->
                     <div class="left-right">
                         <span><i class="iconfont icon-jisuanqi"></i></span>
-                        <span><el-button style="width: 100%;" @click="queryProbByTxid(BlockCurrentPick)">Calculate The
+                        <span><el-button style="width: 100%;" @click="prob = OutputCurrentPick.probability">Calculate
+                                The
                                 Probability</el-button></span>
                     </div>
 
@@ -188,6 +192,9 @@ export default {
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 7 },
 
             ],
+            OutputHasProb: [
+
+            ],
             // InputSelect: {},
             // OutputSelect: {},
             InputCurrentPick: '',
@@ -209,7 +216,8 @@ export default {
             prob: 0,
             mixedInput: {},
             decomposeOutput: {},
-            dialogVisible: false
+            dialogVisible: false,
+            OpShow: true
         }
     },
     computed: {
@@ -237,6 +245,16 @@ export default {
                 this.createChart('chart1', newVal, this.changeStats)
             }
         },
+        InputCurrentPick: {
+            handler(newVal, oldVal) {
+                // console.log(this.BlockCurrentPick)
+                this.queryProbByTxid(this.BlockCurrentPick)
+                this.OpShow = false
+                if (true) {
+                    this.$nextTick(() => this.OpShow = true)
+                }
+            }
+        }
         // InputCurrentPick: {
         //     handler(newVal, oldVal) {
         //         this.queryProbByTxid(newVal)
@@ -319,13 +337,23 @@ export default {
                     if (input == this.InputCurrentPick) {
                         let problist = tempData[input]
                         // console.log(problist)
-                        for (let probres of problist) {
-                            if (probres.address == this.OutputCurrentPick) {
-                                // console.log(probres.address)
-                                this.prob = probres.probability
-                                // console.log(this.prob)
+                        this.OutputHasProb = problist.map((item) => {
+                            return {
+                                hash: item.address,
+                                amount: 0,
+                                probability: item.probability
                             }
-                        }
+                        })
+                        // console.log(this.OutputHasProb)
+                        // for (let probres of problist) {
+                        //     if (probres.address == this.OutputCurrentPick) {
+                        //         // console.log(probres.address)
+                        //         this.prob = probres.probability
+                        //         // console.log(this.prob)
+                        //     } else {
+                        //         this.prob = -1
+                        //     }
+                        // }
                     }
                 }
             })
