@@ -102,7 +102,8 @@
                         <span>Input</span>
                         <span>
                             <el-select v-model="InputCurrentPick" style="width: 100%;" placeholder="select an input">
-                                <el-option v-for=" item  in  InputList " :key="item.id" :value="item.hash+': '+item.amount">
+                                <el-option v-for=" item  in  InputList " :key="item.id" :value="item.hash"
+                                    :label="item.hash + ': ' + item.amount">
                                 </el-option>
                             </el-select>
                         </span>
@@ -112,7 +113,7 @@
                         <span><el-select v-model="OutputCurrentPick" style="width: 100%;"
                                 placeholder="select an output">
                                 <el-option v-if="item.type == 'output'" v-for=" item  in  OutputList " :key="item.id"
-                                    :value="item.hash+': '+item.amount">
+                                    :value="item.hash" :label="item.hash + ': ' + item.amount">
                                 </el-option>
 
                             </el-select></span>
@@ -313,6 +314,7 @@ export default {
             axios.get(`${this.base_url}/${this.username}/probability/${txid}`).then(resp => {
                 // console.log(resp.data.data)
                 let tempData = resp.data.data
+                // console.log(this.InputCurrentPick)
                 for (let input in tempData) {
                     if (input == this.InputCurrentPick) {
                         let problist = tempData[input]
