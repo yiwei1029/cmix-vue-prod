@@ -102,7 +102,7 @@
                         <span>Input</span>
                         <span>
                             <el-select v-model="InputCurrentPick" style="width: 100%;" placeholder="select an input">
-                                <el-option v-for=" item  in  InputList " :key="item.id" :value="item.hash">
+                                <el-option v-for=" item  in  InputList " :key="item.id" :value="item.hash+': '+item.amount">
                                 </el-option>
                             </el-select>
                         </span>
@@ -112,7 +112,7 @@
                         <span><el-select v-model="OutputCurrentPick" style="width: 100%;"
                                 placeholder="select an output">
                                 <el-option v-if="item.type == 'output'" v-for=" item  in  OutputList " :key="item.id"
-                                    :value="item.hash">
+                                    :value="item.hash+': '+item.amount">
                                 </el-option>
 
                             </el-select></span>
@@ -340,7 +340,7 @@ export default {
             }
             axios.get(`${this.base_url}/${this.username}/transfer/${blockId}`).then(
                 resp => {
-                    console.log(resp.data.data.format_data);
+                    // console.log(resp.data.data.format_data);
                     let dataTemp = resp.data.data.format_data
                     this.mixedInput = dataTemp.input
                     this.decomposeOutput = dataTemp.output
